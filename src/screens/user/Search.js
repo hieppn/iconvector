@@ -4,26 +4,25 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableWithoutFeedback,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { Images } from '../../themes';
 import ServiceType from '../../components/ServiceType';
 import SliderItem from '../../components/SliderItem';
 import Quality from '../../components/Quality';
 import Icon from 'react-native-vector-icons/kindicare';
-// import DropDownItem from '../../components/DropDownItem';
 import DropDownPicker from 'react-native-dropdown-picker';
-const Search = () => {
+import ChildCare from './ChildCare';
+import { Navigation } from 'react-native-navigation';
+const Search = (props) => {
   // onFindChildcare= () =>{
 
   // }
   return (
     <ScrollView>
       <View style={styles.locationView}>
-        <Icon name="ic-2pinmap" size={23} />
+        <Icon name="ic-pinmap2" size={23} />
         <Text style={styles.locationText}>6 Leigh Place, West Pennant Hills...</Text>
         <TouchableWithoutFeedback>
           <Text style={styles.changeLocationText}>Change</Text>
@@ -32,44 +31,62 @@ const Search = () => {
       <View>
         <Text style={styles.serviceTypeText}> Choose Service Type</Text>
         <View style={styles.containerServiceType}>
-          <ServiceType name="ic-baby" title="Child Care Centre" color="black" />
-          <ServiceType name="ic-abc" title="Pre-school & Kindergarten" color="#DB147F" />
-          <ServiceType name="ic-family" title="Family Day Care" color="black" />
-          <ServiceType name="ic-bag" title="Before & After School Care" color="black" />
+          <ServiceType name="ic-baby" title="Child Care Centre" color="black" check={false} />
+          <ServiceType
+            name="ic-abc"
+            title="Pre-school & Kindergarten"
+            color="#DB147F"
+            check={true}
+          />
+          <ServiceType name="ic-family" title="Family Day Care" color="black" check={false} />
+          <ServiceType
+            name="ic-bag"
+            title="Before & After School Care"
+            color="black"
+            check={false}
+          />
         </View>
       </View>
       <View>
         <SliderItem
-          source={Images.icabc}
-          name="KindiCare Rating"
+          name="ic-kindi"
+          title="KindiCare Rating"
           numberMin="8.0"
           numberMax="10.0"
+          size={23}
         />
         <SliderItem
-          source={Images.icabc}
-          name="The shorted distance from home"
+          name="ic-2pinmap"
+          size={23}
+          title="The shorted distance from home"
           numberMin="0 km"
           numberMax="50 km"
         />
       </View>
       <View>
         <View style={styles.headerValueView}>
-          <Image source={Images.icbaby} />
+          <Icon name="ic-moneyflower" size={23} />
           <Text style={styles.titleHeaderValue}>Value For Money For The Area</Text>
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', marginLeft: 20, marginRight: 28 }}>
           <Quality quality="Good" />
           <Quality quality="Very Good" />
           <Quality quality="Excellent" />
         </View>
-        <View>
-          <SliderItem source={Images.icabc} name="Cost Per Day" numberMin="$55" numberMax="$127" />
+        <View style={{ marginTop: -25 }}>
+          <SliderItem
+            name="ic-cost"
+            title="Cost Per Day"
+            numberMin="$55"
+            numberMax="$127"
+            size={23}
+          />
         </View>
       </View>
       <View>
         <View style={styles.headerValueView}>
-          <Image source={Images.icbaby} />
-          <Text style={styles.titleHeaderValue}>Sort Results By</Text>
+          <Icon name="ic-nqsrating" size={23} />
+          <Text style={styles.titleHeaderValue}>National Quality Standard Rating</Text>
         </View>
         <View>
           <DropDownPicker
@@ -95,18 +112,18 @@ const Search = () => {
             ]}
             defaultValue="item1"
             containerStyle={{ height: 40 }}
-            style={{ borderColor: '#DB147F', marginLeft: 20, marginRight: 20, height: 300 }}
+            style={{ borderColor: '#DB147F', marginLeft: 28, marginRight: 28 }}
             itemStyle={{
               justifyContent: 'flex-start',
             }}
-            dropDownStyle={{ borderColor: '#DB147F', marginLeft: 20, marginRight: 20, width: 320 }}
+            dropDownStyle={{ borderColor: '#DB147F', marginLeft: 28, marginRight: 28, width: 304 }}
           />
         </View>
       </View>
       <View>
         <View style={styles.headerValueView}>
-          <Image source={Images.icbaby} />
-          <Text style={styles.titleHeaderValue}>National Quality Standard Rating</Text>
+          <Icon name="ic-sort" size={23} />
+          <Text style={styles.titleHeaderValue}>Sort Results By</Text>
         </View>
         <View>
           <DropDownPicker
@@ -128,16 +145,17 @@ const Search = () => {
               },
             ]}
             defaultValue="item1"
+            hidden={true}
             containerStyle={{ height: 40 }}
-            style={{ borderColor: '#DB147F', marginLeft: 20, marginRight: 20, height: 300 }}
+            style={styles.dropView}
             itemStyle={{
               justifyContent: 'flex-start',
             }}
             dropDownStyle={{
               borderColor: '#DB147F',
-              marginLeft: 20,
-              marginRight: 20,
-              width: 320,
+              marginLeft: 28,
+              marginRight: 28,
+              width: 304,
               color: '#DB147F',
             }}
           />
@@ -146,17 +164,30 @@ const Search = () => {
       <View>
         <TouchableOpacity
           style={{
-            width: 343,
+            width: 300,
             height: 48,
             backgroundColor: '#DB147F',
             borderRadius: 4,
-            marginTop: 60,
+            marginTop: 70,
             justifyContent: 'center',
             alignSelf: 'center',
             alignItems: 'center',
-            marginBottom: 60,
+            marginBottom: 70,
           }}
-          //  onPress={}
+          onPress={() =>
+            Navigation.push(props.componentId, {
+              component: {
+                name: 'ChildCare',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Application',
+                    },
+                  },
+                },
+              },
+            })
+          }
         >
           <Text>Find Childcare</Text>
         </TouchableOpacity>
@@ -165,6 +196,7 @@ const Search = () => {
   );
 };
 const styles = StyleSheet.create({
+  dropView: { borderColor: '#DB147F', marginLeft: 28, marginRight: 28 },
   titleHeaderValue: {
     marginLeft: 14.14,
     fontFamily: 'Mulish',
@@ -182,6 +214,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 28.23,
     marginTop: 10,
+    marginBottom: 20,
   },
   // container: {
   //   flex: 1,
@@ -201,6 +234,7 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     letterSpacing: 0.002,
     textAlign: 'left',
+    marginLeft: 10,
   },
   changeLocationText: {
     paddingRight: 20,
@@ -239,3 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 export default Search;
+Navigation.registerComponent('ChildCare', () => ChildCare);

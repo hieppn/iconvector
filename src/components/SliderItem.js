@@ -1,19 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/kindicare';
 import Slider from 'react-native-slider';
 const SliderItem = (props) => {
   return (
     <View>
       <View style={styleSlider.headerRateView}>
-        <Image source={props.source} />
-        <Text style={styleSlider.titleHeader}>{props.name}</Text>
+        <Icon name={props.name} color={props.color} size={props.size} />
+        <Text style={styleSlider.titleHeader}>{props.title}</Text>
       </View>
       <View>
         <View style={{ marginTop: 10, flexDirection: 'row' }}>
           <Text
             style={{
-              marginLeft: 20,
+              marginLeft: 28,
               fontFamily: 'Mulish',
               fontStyle: 'normal',
               fontWeight: '600',
@@ -49,15 +50,15 @@ const SliderItem = (props) => {
             marginTop: 7,
             width: 300,
             height: 20,
-            marginLeft: 20,
+            marginLeft: 10,
             justifyContent: 'center',
             alignSelf: 'center',
           }}
           minimumValue={0}
           maximumValue={1}
           minimumTrackTintColor="#DB147F"
-          maximumTrackTintColor="#F2F2F2"
-          thumbTintColor="white"
+          maximumTrackTintColor="grey"
+          thumbTintColor="grey"
         />
       </View>
     </View>
